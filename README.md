@@ -48,5 +48,3 @@ docker volume ls | grep minato
 
 **Note:** This document was created based on experience running a Soneium Minato node following the official documentation. For the latest information, always refer to the [official Soneium documentation](https://docs.soneium.org/docs/builders/node).
 
-Last updated: 2025-03-02 14:23:20
-Prepared by: Madleyym
