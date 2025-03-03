@@ -1,50 +1,119 @@
-# Soneium Minato Node Uninstallation Guide
+# Soneium Minato Node Setup Guide
 
-## About This Document
-This document contains instructions on how to uninstall a node for Soneium's public testnet Minato. This guide is based on experience running a node following the official documentation from [Soneium Documentation](https://docs.soneium.org/docs/builders/node).
+**Last Updated: 2025-03-03 04:16:03 UTC**  
+**Maintainer: Madleyym**
 
-## Node Uninstallation Steps
+This README provides instructions for setting up and running a node for Soneium's public testnet "Minato".
 
-### 1. Stop and Remove Containers
-Make sure you are in the node installation directory:
+Soneium is a layer-2 blockchain solution, and Minato is its public testnet. Running a node helps contribute to the network's decentralization and provides you with a direct interface to the blockchain.
+
+## Hardware Requirements
+
+We recommend the following minimum specifications:
+- **Recommended AWS Instance**: i3.2xlarge or equivalent
+- **CPU**: 8 cores
+- **RAM**: 16 GB
+- **Storage**: 100 GB SSD
+- **Network**: 100 Mbps
+
+For public RPC nodes, you will need to adjust resources based on your expected traffic.
+
+## Prerequisites
+
+Before setting up your Minato node, ensure you have:
+
+- **Docker**: [Installation Guide](https://docs.docker.com/get-docker/)
+- **Docker Compose**: [Installation Guide](https://docs.docker.com/compose/install/)
+- **Ethereum RPC Node**: Access to an Ethereum RPC endpoint
+- **Ethereum Beacon API**: Access to an Ethereum Beacon API endpoint
+
+## Installation
+
+### Docker Installation
+
+1. **Create a directory for the node**:
+   ```bash
+   mkdir soneium-minato-node
+   cd soneium-minato-node
+   ```
+
+2. **Download the configuration files**:
+   - docker-compose.yml
+   - minato-genesis.json
+   - minato-rollup.json
+   - sample.env
+
+   These files are available from the official Soneium documentation.
+
+3. **Generate JWT Secret**:
+   ```bash
+   openssl rand -hex 32 > jwt.txt
+   ```
+
+4. **Configure Environment Variables**:
+   ```bash
+   mv sample.env .env
+   ```
+   
+   Edit the `.env` file to set your Ethereum endpoints:
+   ```
+   L1_URL=<your_ethereum_rpc_node>
+   L1_BEACON=<your_ethereum_beacon_api>
+   ```
+
+5. **Configure Public IP (If Behind NAT)**:
+   
+   If your node is behind a NAT device:
+   
+   - For op-geth, add to docker-compose.yml:
+     ```
+     --nat=extip:<your_node_public_ip>
+     ```
+   
+   - For op-node, add to docker-compose.yml:
+     ```
+     --p2p.advertise.ip=<your_node_public_ip>
+     ```
+
+### Binary Installation
+
+*Coming soon*: Instructions for setting up the node using binary files.
+
+## Running the Node
+
+Start the node using Docker Compose:
+
 ```bash
-cd soneium-minato-node
+docker-compose up -d
 ```
 
-Stop and remove containers:
+## Monitoring
+
+Monitor your node's logs:
+
+For op-node-minato:
 ```bash
-docker-compose down
+docker-compose logs -f op-node-minato
 ```
 
-### 2. Remove Data Volumes (Optional)
-To remove all node data:
+For op-geth-minato:
 ```bash
-docker-compose down -v
+docker-compose logs -f op-geth-minato
 ```
 
-### 3. Remove Docker Images (Optional)
-```bash
-docker rmi $(docker images | grep "op-geth\|op-node" | awk '{print $3}')
-```
+## Troubleshooting
 
-### 4. Remove Node Directory (Optional)
-```bash
-cd ..
-rm -rf soneium-minato-node
-```
+- **Sync Issues**: Ensure your L1 node is geographically close to the Minato node for faster synchronization
+- **Connection Problems**: Verify firewall settings and network connectivity
+- **Resource Limitations**: Check system resources if experiencing performance issues
 
-### 5. Verify Uninstallation
-Ensure all containers have been removed:
-```bash
-docker ps -a | grep minato
-```
+## Additional Resources
 
-Ensure all volumes have been removed (if using the `-v` option):
-```bash
-docker volume ls | grep minato
-```
+- [Official Documentation](https://docs.soneium.org/docs/builders/node)
+- [Soneium GitHub](https://github.com/soneium)
+- [Community Discord](https://discord.gg/soneium)
 
 ---
 
-**Note:** This document was created based on experience running a Soneium Minato node following the official documentation. For the latest information, always refer to the [official Soneium documentation](https://docs.soneium.org/docs/builders/node).
-
+This README is based on the official Soneium documentation. For the most up-to-date information, always refer to the [official documentation](https://docs.soneium.org/docs/builders/node).
+```
