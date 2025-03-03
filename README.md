@@ -113,4 +113,3 @@ docker-compose logs -f op-geth-minato
 ---
 
 This README is based on the official Soneium documentation. For the most up-to-date information, always refer to the [official documentation](https://docs.soneium.org/docs/builders/node).
-```
