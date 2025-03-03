@@ -1,8 +1,5 @@
 # Soneium Minato Node Setup Guide
 
-**Last Updated: 2025-03-03 04:16:03 UTC**  
-**Maintainer: Madleyym**
-
 This README provides instructions for setting up and running a node for Soneium's public testnet "Minato".
 
 Soneium is a layer-2 blockchain solution, and Minato is its public testnet. Running a node helps contribute to the network's decentralization and provides you with a direct interface to the blockchain.
