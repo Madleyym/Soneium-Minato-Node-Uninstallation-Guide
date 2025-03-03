@@ -40,7 +40,7 @@ Before setting up your Minato node, ensure you have:
    - minato-rollup.json
    - sample.env
 
-   These files are available from the official Soneium documentation.
+   These files are available from the official Soneium [documentation](https://docs.soneium.org/docs/builders/node/).
 
 3. **Generate JWT Secret**:
    ```bash
